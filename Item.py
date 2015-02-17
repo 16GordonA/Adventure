@@ -18,5 +18,3 @@ class ResourceChest(Item):
         self.contents = [random.randint(0,level) for i in range(len(ResourceChest.resources))]
         self.itemTypes = ResourceChest.resources
         Item.__init__(self, image, x, y)
-        
-        

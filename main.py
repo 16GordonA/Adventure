@@ -50,7 +50,7 @@ while True:
     i = 0
     for it in items:
         a = player.hasItem(it)
-        print player.items
+        #print player.items
         if a > 0:
             screen.blit(itempics[i], (20 + 40*counter, 40 - itempics[i].get_height()))
             itemcont = myFont.render(str(player.itemCount[a]) + "x "  + player.items[a], 1, (255, 255, 255))
