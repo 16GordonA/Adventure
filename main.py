@@ -16,6 +16,13 @@ charpic = pygame.image.load('player.png')
 background = pygame.image.load('background.png')
 player = Player(charpic, 250, 250)
 
+chest = ResourceChest(charpic, 3)
+
+player.openChest(chest)
+
+for i in range(len(player.items)):
+    print str(player.itemCount[i]) + "x "  + player.items[i]
+
 while True:
     screen.blit(background, (0, 0+bh))
     all_chars.draw(screen)

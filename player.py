@@ -1,5 +1,6 @@
 import pygame, sys, math
 from pygame.locals import *
+from Item import *
 all_chars = pygame.sprite.Group()
 
 class Player(pygame.sprite.Sprite):
@@ -10,6 +11,7 @@ class Player(pygame.sprite.Sprite):
         self.image = self.baseimage
         self.rect = self.image.get_rect().move(startX, startY)  # rect is for blitting
         self.items = []
+        self.itemCount = []
         self.direction = 0 #direction in degrees
         pygame.sprite.Sprite.__init__(self, all_chars)
     
@@ -29,4 +31,18 @@ class Player(pygame.sprite.Sprite):
             self.rect = self.rect.move(v*math.sin(self.direction *2*math.pi/360), -v*math.cos(self.direction *2*math.pi/360))
         elif key[K_DOWN]:
             self.rect = self.rect.move(-v*math.sin(self.direction *2*math.pi/360), v*math.cos(self.direction *2*math.pi/360))
+    
+    def openChest(self, chest):
+        for i in range(len(chest.itemTypes)):
+            for j in range(chest.contents[i]):
+                self.addItem(chest.itemTypes[i])
+    
+    def addItem(self, item):
+        for i in range(len(self.items)):
+            if self.items[i] == item:
+                self.itemCount[i] += 1
+                return
+            
+        self.items = self.items + [item]
+        self.itemCount = self.itemCount + [1]
         
