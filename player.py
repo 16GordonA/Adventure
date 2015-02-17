@@ -1,7 +1,8 @@
 import pygame, sys, math
 from pygame.locals import *
+#from main import 
 from Item import *
-from imaplib import Response_code
+
 all_chars = pygame.sprite.Group()
 
 class Player(pygame.sprite.Sprite):
@@ -14,13 +15,15 @@ class Player(pygame.sprite.Sprite):
         self.itemCount = [0]
         self.direction = 0 #direction in degrees
         self.auto = False
+        self.mainmap = True
+        self.loc = None
         pygame.sprite.Sprite.__init__(self, all_chars)
     
     def update(self, keyPressed):
         if keyPressed[K_a]:
             self.auto = not self.auto
         if self.auto:
-            chests = [item for item in all_items]
+            chests = [ch for ch in all_chests]
             self.move(self.autoMove(chests, keyPressed))
         else:
             self.move(keyPressed)
@@ -39,13 +42,22 @@ class Player(pygame.sprite.Sprite):
             self.rect = self.rect.move(v*math.sin(self.direction *2*math.pi/360), -v*math.cos(self.direction *2*math.pi/360))
         elif key[K_DOWN]:
             self.rect = self.rect.move(-v*math.sin(self.direction *2*math.pi/360), v*math.cos(self.direction *2*math.pi/360))
-        elif key[K_SPACE]:
+        elif key[K_SPACE] and self.mainmap == True:
             pointx = (self.rect.right + self.rect.left)/2 + r*math.sin(self.direction *2*math.pi/360) 
             pointy = (self.rect.top + self.rect.bottom)/2 - r*math.cos(self.direction *2*math.pi/360)
-            for item in all_items:
-                if pointx < item.rect.right + 5 and pointx > item.rect.left - 5:
-                    if pointy > item.rect.top - 5 and pointy < item.rect.bottom + 5:
-                        self.openChest(item)
+            for chest in all_chests:
+                if pointx < chest.rect.right + 5 and pointx > chest.rect.left - 5:
+                    if pointy > chest.rect.top - 5 and pointy < chest.rect.bottom + 5:
+                        self.openChest(chest)
+            for loc in all_locs:
+                if pointx < loc.rect.right + 5 and pointx > loc.rect.left - 5:
+                    if pointy > loc.rect.top - 5 and pointy < loc.rect.bottom + 5:
+                        self.mainmap = False
+                        self.loc = loc
+                        self.auto = False
+        elif key[K_SPACE] and self.mainmap == False:
+            self.mainmap = True
+            self.loc = None
     
     def autoMove(self, chests, key):
         
@@ -104,7 +116,7 @@ class Player(pygame.sprite.Sprite):
             for j in range(chest.contents[i]):
                 self.addItem(chest.itemTypes[i])
                 
-        all_items.remove(chest)
+        all_chests.remove(chest)
     def addItem(self, item):
         for i in range(len(self.items)):
             if self.items[i] == item:
