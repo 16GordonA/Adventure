@@ -45,6 +45,8 @@ class Player(pygame.sprite.Sprite):
                 self.addItem(chest.itemTypes[i])
                 
         all_items.remove(chest)
+        for i in range(len(self.itemCount)):
+            print str(self.itemCount[i])  + self.items[i]
     
     def addItem(self, item):
         for i in range(len(self.items)):

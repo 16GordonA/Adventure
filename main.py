@@ -4,7 +4,7 @@ from player import *
 from Item import *
 
 
-bh = 50 #bonus height for inventory
+bh = 60 #bonus height for inventory
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600 + bh
@@ -12,8 +12,19 @@ SCREEN_HEIGHT = 600 + bh
 size = SCREEN_WIDTH, SCREEN_HEIGHT
 screen = pygame.display.set_mode(size)
 
+pygame.font.init()
+myFont = pygame.font.SysFont("Arial", 8)
+
 charpic = pygame.image.load('player.png')
 background = pygame.image.load('background.png')
+header = pygame.image.load('header.png')
+items = ['wood', 'stone', 'metal']# 'glass', 'gems', 'keys']
+itempics = ['' for i in range(len(items))]
+
+itempics[0] = pygame.image.load('Resources/wood.png')
+itempics[1] = pygame.image.load('Resources/stone.png')
+itempics[2] = pygame.image.load('Resources/metal.png')
+
 rChest = pygame.image.load('chest1.png') #resources
 eChest = pygame.image.load('chest2.png') #equipment
 iChest = pygame.image.load('chest3.png') #items
@@ -32,7 +43,21 @@ while True:
         chest = ResourceChest(rChest, 3, random.randint(50, 750), random.randint(50+bh, 550+bh))
         chests = 1
     chests = len(all_items)
+    screen.blit(header, (0,0))
     screen.blit(background, (0, 0+bh))
+    
+    counter = 0
+    i = 0
+    for it in items:
+        a = player.hasItem(it)
+        print player.items
+        if a > 0:
+            screen.blit(itempics[i], (20 + 40*counter, 40 - itempics[i].get_height()))
+            itemcont = myFont.render(str(player.itemCount[a]) + "x "  + player.items[a], 1, (255, 255, 255))
+            screen.blit(itemcont, (20 + 40*counter, 45))
+            counter += 1
+        i += 1
+    
     all_chars.draw(screen)
     all_items.draw(screen)
     
