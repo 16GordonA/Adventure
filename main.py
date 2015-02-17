@@ -13,17 +13,16 @@ size = SCREEN_WIDTH, SCREEN_HEIGHT
 screen = pygame.display.set_mode(size)
 
 pygame.font.init()
-myFont = pygame.font.SysFont("Arial", 8)
+myFont = pygame.font.SysFont("Arial", 10)
 
 charpic = pygame.image.load('player.png')
 background = pygame.image.load('background.png')
 header = pygame.image.load('header.png')
-items = ['wood', 'stone', 'metal']# 'glass', 'gems', 'keys']
+items = ['wood', 'stone', 'metal', 'glass', 'gems'] # 'keys']
 itempics = ['' for i in range(len(items))]
 
-itempics[0] = pygame.image.load('Resources/wood.png')
-itempics[1] = pygame.image.load('Resources/stone.png')
-itempics[2] = pygame.image.load('Resources/metal.png')
+for i in range(len(items)):
+    itempics[i] = pygame.image.load('Resources/' + items[i] + '.png')
 
 rChest = pygame.image.load('chest1.png') #resources
 eChest = pygame.image.load('chest2.png') #equipment
