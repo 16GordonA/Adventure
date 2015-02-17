@@ -31,17 +31,15 @@ iChest = pygame.image.load('chest3.png') #items
 player = Player(charpic, 250, 250)
 
 chest = ResourceChest(rChest, 3, 100, 100)
-chests = 1
-
-#player.openChest(chest)
-
-for i in range(len(player.items)):
-    print str(player.itemCount[i]) + "x "  + player.items[i]
+numChests = 3
+chestLevel = 3
+chests = numChests
 
 while True:
     if chests < 1:
-        chest = ResourceChest(rChest, 3, random.randint(50, 750), random.randint(50+bh, 550+bh))
-        chests = 1
+        for i in range(numChests):
+            chest = ResourceChest(rChest, chestLevel, random.randint(50, 750), random.randint(50+bh, 550+bh))
+        chests = len(all_items)
     chests = len(all_items)
     screen.blit(header, (0,0))
     screen.blit(background, (0, 0+bh))

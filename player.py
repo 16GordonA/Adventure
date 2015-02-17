@@ -13,11 +13,17 @@ class Player(pygame.sprite.Sprite):
         self.items = ['null']
         self.itemCount = [0]
         self.direction = 0 #direction in degrees
+        self.auto = False
         pygame.sprite.Sprite.__init__(self, all_chars)
     
     def update(self, keyPressed):
-        chests = [item for item in all_items]
-        self.move(self.autoMove(chests, keyPressed))
+        if keyPressed[K_a]:
+            self.auto = not self.auto
+        if self.auto:
+            chests = [item for item in all_items]
+            self.move(self.autoMove(chests, keyPressed))
+        else:
+            self.move(keyPressed)
     
     def move(self, key):
         w = 7.5 #angular speed #actually an omega, you just can't tell
