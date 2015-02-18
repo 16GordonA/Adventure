@@ -27,10 +27,13 @@ for i in range(len(items)):
 rChest = pygame.image.load('chest1.png') #resources
 eChest = pygame.image.load('chest2.png') #equipment
 iChest = pygame.image.load('chest3.png') #items
+table1 = pygame.image.load('CraftingTable1.png') #first table
 player = Player(charpic, 250, 250)
 
 #chest = ResourceChest(rChest, 3, 100, 100)
 l = Location(eChest, background, 100, 100)
+hotspots1 = [[25,225,25,225], [300,500,25,225], [575,775,25,225], [25,225, 325, 525], [575,775,325,525]]
+ct = CraftingTable(iChest, table1, 400, 400, hotspots1, ['Jewelry', 'green', 'yellow', 'stick', 'purple'])
 numChests = 3
 chestLevel = 3
 chests = numChests
@@ -86,6 +89,10 @@ while True:
     
     key = pygame.key.get_pressed()
     player.update(key)
+    
+    if pygame.mouse.get_pressed()[0]:
+        player.loc.registerClick()
+        time.sleep(.1)
     
     pygame.display.update()
     pygame.event.pump()
