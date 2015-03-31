@@ -6,13 +6,15 @@ from Item import *
 all_chars = pygame.sprite.Group()
 
 class Player(pygame.sprite.Sprite):
+    items = ['null']
+    itemCount = [0]
+    
+    
     def __init__(self, image, startX, startY):
         pygame.sprite.Sprite.__init__(self)
         self.baseimage = image.convert_alpha()
         self.image = self.baseimage
         self.rect = self.image.get_rect().move(startX, startY)  # rect is for blitting
-        self.items = ['null']
-        self.itemCount = [0]
         self.direction = 0 #direction in degrees
         self.auto = False
         self.mainmap = True
@@ -118,21 +120,24 @@ class Player(pygame.sprite.Sprite):
                 
         all_chests.remove(chest)
     def addItem(self, item):
-        for i in range(len(self.items)):
-            if self.items[i] == item:
-                self.itemCount[i] += 1
+        for i in range(len(Player.items)):
+            if Player.items[i] == item:
+                Player.itemCount[i] += 1
                 return
             
-        self.items = self.items + [item]
-        self.itemCount = self.itemCount + [1]
+        Player.items = Player.items + [item]
+        Player.itemCount = Player.itemCount + [1]
         
     def hasItem(self, item): #returns index of item or -1
         i = 0
-        for it in self.items:
+        for it in Player.items:
             if it == item:
                 return i
             i += 1 
         
         return -1
         
-        
+class Helper(Player):
+    def update(self, keyPressed):
+        chests = [ch for ch in all_chests]
+        self.move(self.autoMove(chests, keyPressed))

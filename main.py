@@ -34,7 +34,9 @@ player = Player(charpic, 250, 250)
 l = Location(eChest, background, 100, 100)
 hotspots1 = [[25,225,25,225], [300,500,25,225], [575,775,25,225], [25,225, 325, 525], [575,775,325,525]]
 ct = CraftingTable(iChest, table1, 400, 400, hotspots1, ['Jewelry', 'green', 'yellow', 'stick', 'purple'])
-numChests = 3
+for i in range(1,3):
+    h = Helper(charpic, random.randint(10,500), random.randint(100,400))
+numChests = 10
 chestLevel = 3
 chests = numChests
 mainmap = player.mainmap
@@ -56,7 +58,7 @@ while True:
             #print player.items
             if a > 0:
                 screen.blit(itempics[i], (20 + 60*counter, 40 - itempics[i].get_height()))
-                itemcont = myFont.render(str(player.itemCount[a]) + "x "  + player.items[a], 1, (255, 255, 255))
+                itemcont = myFont.render(str(Player.itemCount[a]) + "x "  + Player.items[a], 1, (255, 255, 255))
                 screen.blit(itemcont, (20 + 60*counter, 45))
                 counter += 1
             i += 1
@@ -67,7 +69,8 @@ while True:
         all_locs.draw(screen)
         
         key = pygame.key.get_pressed()
-        player.update(key)
+        for p in all_chars:
+            p.update(key)
         
         pygame.display.update()
         pygame.event.pump()
