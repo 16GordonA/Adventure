@@ -17,11 +17,11 @@ class ResourceChest(Item):
     
     def __init__ (self, image, level, x, y):
         self.level = level
-        self.contents = [random.randint(0,level) for i in range(len(ResourceChest.resources))]
-        self.itemTypes = ResourceChest.resources
-        if random.randint(0,100) < level:
-            self.contents += [1]
-            self.itemTypes += ['keys']
+        self.contents = [random.randint(0,level) for i in range(len(ResourceChest.resources))] + [int((random.randint(0,int(100/level)) + 1)*level/100)]
+        self.itemTypes = ResourceChest.resources + ['keys']
+        #if random.randint(0,100) < level:
+            #self.contents += [1]
+            #self.itemTypes += ['keys']
         Item.__init__(self, image, x, y)
         all_items.remove(self)
         pygame.sprite.Sprite.__init__(self,all_chests)

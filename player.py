@@ -114,7 +114,7 @@ class Player(pygame.sprite.Sprite):
         return math.sqrt(x*x + y*y)
         
     def openChest(self, chest):
-        for i in range(len(chest.itemTypes)):
+        for i in range(len(chest.contents)):
             for j in range(chest.contents[i]):
                 self.addItem(chest.itemTypes[i])
                 

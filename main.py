@@ -34,9 +34,9 @@ player = Player(charpic, 250, 250)
 l = Location(eChest, background, 100, 100)
 hotspots1 = [[25,225,25,225], [300,500,25,225], [575,775,25,225], [25,225, 325, 525], [575,775,325,525]]
 ct = CraftingTable(iChest, table1, 400, 400, hotspots1, ['Jewelry', 'green', 'yellow', 'stick', 'purple'])
-for i in range(1,3):
-    h = Helper(charpic, random.randint(10,500), random.randint(100,400))
-numChests = 10
+for i in range(0,15):
+    h = Helper(charpic, random.randint(50,750), random.randint(50 + bh,550 + bh))
+numChests = 100
 chestLevel = 3
 chests = numChests
 mainmap = player.mainmap
@@ -45,6 +45,7 @@ loc = player.loc
 while True:
     while player.mainmap:
         if chests < 1:
+            chestLevel += 1
             for i in range(numChests):
                 chest = ResourceChest(rChest, chestLevel, random.randint(50, 750), random.randint(50+bh, 550+bh))
         chests = len(all_chests)
